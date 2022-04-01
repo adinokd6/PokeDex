@@ -7,11 +7,13 @@ import { AwesomeButton } from "react-awesome-button";
 import Header from './PokeHeader'
 import "react-awesome-button/dist/styles.css";
 import { fetchWrapper } from '../fetchWrapper';
+import { storeExport } from '../store';
+import {connect, ConnectedProps} from 'react-redux'
 
 class MainTable extends React.Component {
   constructor(props) {
     super(props)
-    this.state ={
+    this.state = {
       theme: 'light',
       loading: true
     }
@@ -19,15 +21,22 @@ class MainTable extends React.Component {
 
   apiUrl = "https://pokeapi.co/api/v2/pokemon"
 
+  componentDidMount() {
+    this.updateValues()
+  }
+
+
+
   themeToggler = () => {
-    this.state.theme === 'light' ? this.setState({theme: 'dark'}) : this.setState({theme: 'light'})
+    this.state.theme === 'light' ? this.setState({ theme: 'dark' }) : this.setState({ theme: 'light' })
   }
 
   updateValues() {
     fetchWrapper.get(this.apiUrl)
-    .then((result) => {
-
-    })
+      .then((data) => {
+        this.setState({ loading: false })
+        storeExport.dispatch({ type: 'LOAD_LIST', results: data })
+      })
   }
 
   render() {
@@ -39,11 +48,26 @@ class MainTable extends React.Component {
             <Header />
             <AwesomeButton onPress={this.themeToggler} type="primary">Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</AwesomeButton>
           </div>
+          {console.log(this.props.pokemonList)}
         </>
       </ThemeProvider>
     );
   }
-  
+
 }
 
-export default MainTable;
+const maptStateToProps = (state) => {
+  return {
+    pokemonList: state.results
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    results: (newData) => { dispatch({ type: 'LOAD_LIST', results: newData }) }
+  }
+}
+
+const connector = connect(maptStateToProps, mapDispatchToProps)
+
+export default connector(MainTable);

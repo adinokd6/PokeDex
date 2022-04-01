@@ -1,5 +1,5 @@
 import Logo from '../Images/Pokedex_logo.png';
-import Switch from "react-switch";
+
 
 function PokeHeader() {
     return (

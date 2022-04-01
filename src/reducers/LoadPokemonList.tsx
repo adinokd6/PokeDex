@@ -40,9 +40,25 @@ export interface Sprites {
 
 export interface PokemonListAction {
     type: 'LOAD_LIST'
-    count: number
-    results: Array<PokemonUrl>
+    results: PokemonListState
 
 }
 
 export type KnownAction = PokemonListAction
+
+export const loadPokemonListReducer: Reducer<PokemonListState> = (state: PokemonListState | undefined, incomingAction: Action): PokemonListState => {
+    if(state === undefined){
+        return {count: 0, results: []}
+    }
+
+    const action = incomingAction as KnownAction;
+
+    switch(action.type) {
+        case 'LOAD_LIST':
+            return {
+                ...state,
+                count: action.results.count,
+                results: action.results.results
+            }
+    }
+}

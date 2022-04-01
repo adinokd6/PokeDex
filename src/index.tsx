@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './custom.css';
 import MainTable from './Components/MainTable'
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { storeExport } from './store';
+import { createStore } from 'redux';
+
+
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={storeExport}>
     <MainTable />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
