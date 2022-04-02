@@ -13,7 +13,6 @@ export interface PokemonUrl {
 }
 
 export interface PokemonDetails {
-    name: string
     base_experience: number
     height: number
     types: Array<Types>
@@ -47,6 +46,7 @@ export interface PokemonListAction {
 
 export interface PokemonDetailsAction {
     type: 'LOAD_DETAILS'
+    name: string
     details: PokemonDetails
 }
 
@@ -64,19 +64,23 @@ export const loadPokemonListReducer: Reducer<PokemonListState> = (state: Pokemon
             return {
                 ...state,
                 count: action.results.count,
-                results: action.results.results
+                results: action.results.results,
             }
         case 'LOAD_DETAILS':
             return {
                 ...state,
-                results: addDetails(state.results, action.details)
+                results: addDetails(state.results, action.details, action.name)
+            }
+        default:
+            {
+                return state;
             }
 
     }
 }
 
-function addDetails(data: Array<PokemonUrl>, details) {
-    var pokemonIndex = data.findIndex(x => x.name == details.name)
+function addDetails(data: Array<PokemonUrl>, details, name) {
+    var pokemonIndex = data.findIndex(x => x.name == name)
     data[pokemonIndex].specs=details;
     return data
 }

@@ -50,9 +50,7 @@ class MainWindow extends React.Component {
       .entries()
       .map((val, key) => {
         let filtered = this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase());
-        console.log("Filtered", filtered)
-        console.log("Value: ",val[1])
-        return filtered == true ? <Pokemon key={key} apiLink={val[1].url} /> : <></>
+        return filtered == true ? <Pokemon key={key} apiLink={val[1].url} name={val[1].name} pokeDetails={val[1].details} /> : <></>
       }).value()
 
     return (
@@ -64,8 +62,6 @@ class MainWindow extends React.Component {
             <AwesomeButton onPress={this.themeToggler} type="primary">Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</AwesomeButton>
             {listToShow}
           </div>
-          
-          {console.log(this.props.pokemonList)}
         </>
       </ThemeProvider>
     );
