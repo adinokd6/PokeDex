@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./globalStyles";
 import { lightTheme, darkTheme } from "./Themes"
-import { AwesomeButton } from "react-awesome-button";
+import { AwesomeButton, AwesomeButtonProgress } from "react-awesome-button";
 import Header from './PokeHeader'
 import "react-awesome-button/dist/styles.css";
 import { fetchWrapper } from '../fetchWrapper';
@@ -18,7 +18,8 @@ class MainWindow extends React.Component {
     this.state = {
       theme: 'light',
       loading: true,
-      searchName: ""
+      searchName: "",
+      loadNext: false,
     }
   }
 
@@ -42,14 +43,23 @@ class MainWindow extends React.Component {
       })
   }
 
+  loadMorePokemons() {
+    if (!this.state.loading) {
+      console.log(this.props.nextApiLink)
+      fetchWrapper.get(this.props.nextApiLink)
+        .then((data) => {
+          storeExport.dispatch({ type: 'LOAD_MORE', newPokemons: data.results })
+        })
+    }
+  }
+
 
 
   render() {
     const listToShow = _.chain(this.props.pokemonList)
-      .orderBy((x) => { return x.name })
       .entries()
       .map((val, key) => {
-        let filtered = this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase());
+        let filtered = val[1]!=undefined && (this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase()));
         return filtered == true ? <div className="child"><Pokemon key={key} apiLink={val[1].url} name={val[1].name} pokeDetails={val[1].details} /></div> : <></>
       }).value()
 
@@ -62,6 +72,15 @@ class MainWindow extends React.Component {
           <div className="parent">
             {listToShow}
           </div>
+          <div className="center-load-button">
+            <AwesomeButtonProgress action={(element,next) => {
+              setTimeout(() => {
+                this.loadMorePokemons();
+                console.log(next())
+                next();
+              }, 500)
+              }}>Load more pokemons</AwesomeButtonProgress>
+          </div>
         </>
       </ThemeProvider>
     );
@@ -71,13 +90,15 @@ class MainWindow extends React.Component {
 
 const maptStateToProps = (state) => {
   return {
-    pokemonList: state.results
+    pokemonList: state.results,
+    nextApiLink: state.next
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    results: (newData) => { dispatch({ type: 'LOAD_LIST', results: newData }) }
+    results: (newData) => { dispatch({ type: 'LOAD_LIST', results: newData }) },
+    morePokemons: (newData) => { dispatch({ type: 'LOAD_MORE', newPokemons: newData.results }) }
   }
 }
 

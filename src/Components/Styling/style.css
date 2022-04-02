@@ -42,3 +42,8 @@
     flex: 1 0 10%;
     /* explanation below */
 }
+
+.center-load-button {
+    margin-top: 80px !important;
+    text-align: center !important;
+}

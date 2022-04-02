@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 export interface PokemonListState {
     count: number,
+    next: string
     results: Array<PokemonUrl>
 }
 
@@ -50,11 +51,16 @@ export interface PokemonDetailsAction {
     details: PokemonDetails
 }
 
-export type KnownAction = PokemonListAction | PokemonDetailsAction
+export interface LoadMorePokemonsAction {
+    type: 'LOAD_MORE'
+    newPokemons: Array<PokemonUrl>
+}
+
+export type KnownAction = PokemonListAction | PokemonDetailsAction | LoadMorePokemonsAction
 
 export const loadPokemonListReducer: Reducer<PokemonListState> = (state: PokemonListState | undefined, incomingAction: Action): PokemonListState => {
     if(state === undefined){
-        return {count: 0, results: []}
+        return {count: 0, results: [], next: ""}
     }
 
     const action = incomingAction as KnownAction;
@@ -65,11 +71,17 @@ export const loadPokemonListReducer: Reducer<PokemonListState> = (state: Pokemon
                 ...state,
                 count: action.results.count,
                 results: action.results.results,
+                next: action.results.next
             }
         case 'LOAD_DETAILS':
             return {
                 ...state,
                 results: addDetails(state.results, action.details, action.name)
+            }
+        case 'LOAD_MORE':
+            return {
+                ...state,
+                results: state.results.concat(action.newPokemons)
             }
         default:
             {
