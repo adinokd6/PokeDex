@@ -1,4 +1,5 @@
 import { Action, Reducer } from 'redux';
+import _ from 'lodash';
 
 export interface PokemonListState {
     count: number,
@@ -12,6 +13,7 @@ export interface PokemonUrl {
 }
 
 export interface PokemonDetails {
+    name: string
     base_experience: number
     height: number
     types: Array<Types>
@@ -41,10 +43,14 @@ export interface Sprites {
 export interface PokemonListAction {
     type: 'LOAD_LIST'
     results: PokemonListState
-
 }
 
-export type KnownAction = PokemonListAction
+export interface PokemonDetailsAction {
+    type: 'LOAD_DETAILS'
+    details: PokemonDetails
+}
+
+export type KnownAction = PokemonListAction | PokemonDetailsAction
 
 export const loadPokemonListReducer: Reducer<PokemonListState> = (state: PokemonListState | undefined, incomingAction: Action): PokemonListState => {
     if(state === undefined){
@@ -60,5 +66,17 @@ export const loadPokemonListReducer: Reducer<PokemonListState> = (state: Pokemon
                 count: action.results.count,
                 results: action.results.results
             }
+        case 'LOAD_DETAILS':
+            return {
+                ...state,
+                results: addDetails(state.results, action.details)
+            }
+
     }
+}
+
+function addDetails(data: Array<PokemonUrl>, details) {
+    var pokemonIndex = data.findIndex(x => x.name == details.name)
+    data[pokemonIndex].specs=details;
+    return data
 }

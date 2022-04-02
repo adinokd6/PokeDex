@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './custom.css';
-import MainTable from './Components/MainTable'
+import MainTMainWindowable from './Components/MainWindow'
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { storeExport } from './store';
-import { createStore } from 'redux';
+import MainWindow from './Components/MainWindow';
+
 
 
 
 ReactDOM.render(
   <Provider store={storeExport}>
-    <MainTable />
+    <MainWindow />
   </Provider>,
   document.getElementById('root')
 );

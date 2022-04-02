@@ -8,21 +8,24 @@ import Header from './PokeHeader'
 import "react-awesome-button/dist/styles.css";
 import { fetchWrapper } from '../fetchWrapper';
 import { storeExport } from '../store';
-import {connect, ConnectedProps} from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux';
+import _ from 'lodash';
+import Pokemon from './Pokemon.tsx';
 
-class MainTable extends React.Component {
+class MainWindow extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       theme: 'light',
-      loading: true
+      loading: true,
+      searchName: ""
     }
   }
 
-  apiUrl = "https://pokeapi.co/api/v2/pokemon"
+  mainApiUrl = "https://pokeapi.co/api/v2/pokemon"
 
   componentDidMount() {
-    this.updateValues()
+    this.loadPokemonList()
   }
 
 
@@ -31,15 +34,27 @@ class MainTable extends React.Component {
     this.state.theme === 'light' ? this.setState({ theme: 'dark' }) : this.setState({ theme: 'light' })
   }
 
-  updateValues() {
-    fetchWrapper.get(this.apiUrl)
+  loadPokemonList() {
+    fetchWrapper.get(this.mainApiUrl)
       .then((data) => {
         this.setState({ loading: false })
         storeExport.dispatch({ type: 'LOAD_LIST', results: data })
       })
   }
 
+
+
   render() {
+    const listToShow = _.chain(this.props.pokemonList)
+      .orderBy((x) => { return x.name })
+      .entries()
+      .map((val, key) => {
+        let filtered = this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase());
+        console.log("Filtered", filtered)
+        console.log("Value: ",val[1])
+        return filtered == true ? <Pokemon key={key} apiLink={val[1].url} /> : <></>
+      }).value()
+
     return (
       <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
         <>
@@ -47,7 +62,9 @@ class MainTable extends React.Component {
           <div>
             <Header />
             <AwesomeButton onPress={this.themeToggler} type="primary">Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</AwesomeButton>
+            {listToShow}
           </div>
+          
           {console.log(this.props.pokemonList)}
         </>
       </ThemeProvider>
@@ -70,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
 
 const connector = connect(maptStateToProps, mapDispatchToProps)
 
-export default connector(MainTable);
+export default connector(MainWindow);
