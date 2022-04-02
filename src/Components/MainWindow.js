@@ -50,16 +50,16 @@ class MainWindow extends React.Component {
       .entries()
       .map((val, key) => {
         let filtered = this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase());
-        return filtered == true ? <Pokemon key={key} apiLink={val[1].url} name={val[1].name} pokeDetails={val[1].details} /> : <></>
+        return filtered == true ? <div className="child"><Pokemon key={key} apiLink={val[1].url} name={val[1].name} pokeDetails={val[1].details} /></div> : <></>
       }).value()
 
     return (
       <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
         <>
           <GlobalStyles />
-          <div>
-            <Header />
-            <AwesomeButton onPress={this.themeToggler} type="primary">Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</AwesomeButton>
+          <Header />
+          <AwesomeButton onPress={this.themeToggler} type="primary">Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</AwesomeButton>
+          <div className="parent">
             {listToShow}
           </div>
         </>

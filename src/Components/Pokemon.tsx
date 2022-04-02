@@ -4,7 +4,7 @@ import { fetchWrapper } from '../fetchWrapper';
 import { storeExport } from '../store';
 import './Styling/pokemonSpinner.css';
 import { PokemonDetails, PokemonUrl, Sprites } from '../reducers/LoadPokemonList';
-import AwesomeButton from "react-awesome-button";
+import { AwesomeButton } from "react-awesome-button";
 
 interface PokemonProps {
     apiLink: string,
@@ -38,14 +38,15 @@ class Pokemon extends React.Component<PokemonProps, { loading: boolean }> {
 
     render() {
 
-        if (this.state.loading || this.props.pokemonDetails==undefined) {
+        if (this.state.loading || this.props.pokemonDetails == undefined) {
             return <div className="pokemon"></div>
         }
 
         return (
             <div>
+                <div><AwesomeButton className="style-button-for-pokeImg" size="" onPress={() => null}>{<img src={this.props.pokemonDetails.sprites.front_default}></img>}</AwesomeButton></div>
                 <div>{this.props.name}</div>
-                {<img src={this.props.pokemonDetails.sprites.front_default}></img>}
+
             </div>
         )
     }
@@ -61,7 +62,7 @@ const maptStateToProps = (state, getProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        details: (newData,newName) => { dispatch({ type: 'LOAD_DETAILS', details: newData, name: newName }) }
+        details: (newData, newName) => { dispatch({ type: 'LOAD_DETAILS', details: newData, name: newName }) }
     }
 }
 
