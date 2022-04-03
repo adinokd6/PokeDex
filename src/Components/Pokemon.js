@@ -40,7 +40,6 @@ class Pokemon extends react_1.default.Component {
                 react_1.default.createElement("div", { className: "pokemon" }));
         }
         const getImage = this.props.pokemonDetails.sprites.front_default;
-        console.log(this.props.pokemonDetails);
         return (react_1.default.createElement("div", null,
             react_1.default.createElement("div", { className: "margin-for-pokemon" },
                 react_1.default.createElement(reactive_button_1.default, { onClick: () => this.openModal(), idleText: react_1.default.createElement(react_1.default.Fragment, null,

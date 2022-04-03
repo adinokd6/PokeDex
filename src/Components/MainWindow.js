@@ -37,6 +37,7 @@ const react_redux_1 = require("react-redux");
 const lodash_1 = __importDefault(require("lodash"));
 const Pokemon_1 = __importDefault(require("./Pokemon"));
 const reactive_button_1 = __importDefault(require("reactive-button"));
+const Pokedex_logo_png_1 = __importDefault(require("../Images/Pokedex_logo.png"));
 class MainWindow extends React.Component {
     constructor(props) {
         super(props);
@@ -61,16 +62,18 @@ class MainWindow extends React.Component {
         });
     }
     loadMorePokemons() {
-        if (!this.state.loading) {
+        if (!this.state.loading && this.props.nextApiLink != null) {
             this.setState({ loadNext: 'loading' });
             setTimeout(() => {
                 fetchWrapper_1.fetchWrapper.get(this.props.nextApiLink)
                     .then((data) => {
                     this.setState({ loadNext: 'success' });
-                    console.log(data.next);
                     store_1.storeExport.dispatch({ type: 'LOAD_MORE', newPokemons: data.results, newLink: data.next });
                 });
             }, 3000);
+        }
+        if (this.props.nextApiLink == null) {
+            this.setState({ loadNext: 'success' });
         }
     }
     render() {
@@ -84,7 +87,8 @@ class MainWindow extends React.Component {
         return (React.createElement(styled_components_1.ThemeProvider, { theme: this.state.theme === 'light' ? Themes_1.lightTheme : Themes_1.darkTheme },
             React.createElement(React.Fragment, null,
                 React.createElement(globalStyles_1.GlobalStyles, null),
-                React.createElement("div", null),
+                React.createElement("div", null,
+                    React.createElement("img", { src: Pokedex_logo_png_1.default })),
                 React.createElement(reactive_button_1.default, { onClick: this.themeToggler },
                     "Change to ",
                     this.state.theme == "dark" ? "light theme" : "dark theme"),

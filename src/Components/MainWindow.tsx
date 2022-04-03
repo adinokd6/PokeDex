@@ -9,6 +9,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import _ from 'lodash';
 import Pokemon from './Pokemon';
 import ReactiveButton from 'reactive-button';
+import Logo from "../Images/Pokedex_logo.png";
 
 interface MainWindowProps {
   pokemonList: [],
@@ -53,7 +54,7 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
   }
 
   loadMorePokemons() {
-    if (!this.state.loading) {
+    if (!this.state.loading && this.props.nextApiLink!=null) {
       this.setState({ loadNext: 'loading' });
       setTimeout(() => {
         fetchWrapper.get(this.props.nextApiLink)
@@ -62,6 +63,11 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
             storeExport.dispatch({ type: 'LOAD_MORE', newPokemons: data.results, newLink: data.next })
           })
       }, 3000)
+    }
+
+    if(this.props.nextApiLink==null)
+    {
+      this.setState({ loadNext: 'success' })
     }
   }
 
@@ -79,7 +85,7 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
       <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
         <>
           <GlobalStyles />
-          <div></div>
+          <div><img src={Logo}></img></div>
           <ReactiveButton onClick={this.themeToggler}>Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</ReactiveButton>
           <div className="parent">
             {listToShow}
