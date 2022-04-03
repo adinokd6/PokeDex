@@ -9,6 +9,7 @@
     color: white;
 }
 
+
 .center-logo {
     margin-left: auto;
     margin-right: auto;
@@ -30,6 +31,7 @@
     border-radius: 20px !important;
     border: 1px solid !important;
     width: 150px !important;
+    --reactive-button-primary-color: #0A285F !important;
 
 }
 
