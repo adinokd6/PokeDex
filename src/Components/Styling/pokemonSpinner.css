@@ -16,6 +16,7 @@
   background: black;
   top: 25px;
   transform: translatey(-50%);
+  left: 0;
 }
 
 .pokemon::after {

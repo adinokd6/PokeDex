@@ -3,21 +3,18 @@ import { connect } from "react-redux";
 import { fetchWrapper } from '../fetchWrapper';
 import { storeExport } from '../store';
 import './Styling/pokemonSpinner.css';
-import { PokemonDetails, PokemonUrl, Sprites } from '../reducers/LoadPokemonList';
+import { PokemonDetails, PokemonUrl, Sprites } from '../reducers/LoadPokemonList.tsx';
 import { AwesomeButton } from "react-awesome-button";
+import PokeModal from './PokeModal';
 
-interface PokemonProps {
-    apiLink: string,
-    name: string,
-    pokemonDetails: PokemonDetails
-}
-
-class Pokemon extends React.Component<PokemonProps, { loading: boolean }> {
+class Pokemon extends React.Component<{ apiLink: string, name: string, pokemonDetails: PokemonDetails }, { loading: boolean, openModal: boolean }> {
     constructor(props) {
         super(props)
         this.state = {
-            loading: true
+            loading: true,
+            openModal: false,
         }
+        this.openModal = this.openModal.bind(this)
     }
 
     componentDidMount() {
@@ -32,8 +29,11 @@ class Pokemon extends React.Component<PokemonProps, { loading: boolean }> {
                     this.setState({ loading: false })
                     storeExport.dispatch({ type: 'LOAD_DETAILS', details: result, name: this.props.name })
                 })
-        }, 3000);
+        }, 2000);
+    }
 
+    openModal() {
+        this.setState(prevState => ({ openModal: !prevState.openModal }))
     }
 
     render() {
@@ -42,11 +42,12 @@ class Pokemon extends React.Component<PokemonProps, { loading: boolean }> {
             return <div className="pokemon"></div>
         }
 
+        console.log(this.props.pokemonDetails)
         return (
             <div>
-                <div><AwesomeButton className="style-button-for-pokeImg" size="" onPress={() => null}>{<img src={this.props.pokemonDetails.sprites.front_default}></img>}</AwesomeButton></div>
+                <div><AwesomeButton className="style-button-for-pokeImg" onPress={() => this.openModal()}>{<img src={this.props.pokemonDetails.sprites.front_default}></img>}</AwesomeButton></div>
                 <div>{this.props.name}</div>
-
+                {this.state.openModal && <PokeModal pokemonDetails={this.props.pokemonDetails} isOpen={this.state.openModal} onClose={this.openModal} />}
             </div>
         )
     }

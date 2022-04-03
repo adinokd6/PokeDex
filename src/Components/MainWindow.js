@@ -1,24 +1,30 @@
 import './Styling/style.css'
-import React, { useState, useEffect } from "react";
+import * as React from 'react';
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./globalStyles";
 import { lightTheme, darkTheme } from "./Themes"
-import { AwesomeButton, AwesomeButtonProgress } from "react-awesome-button";
+import {AwesomeButtonProgress,AwesomeButton} from "react-awesome-button";
 import Header from './PokeHeader'
 import "react-awesome-button/dist/styles.css";
 import { fetchWrapper } from '../fetchWrapper';
 import { storeExport } from '../store';
 import { connect, ConnectedProps } from 'react-redux';
 import _ from 'lodash';
-import Pokemon from './Pokemon.tsx';
+import Pokemon from './Pokemon';
+import { PokemonUrl } from "../reducers/LoadPokemonList.tsx";
 
-class MainWindow extends React.Component {
+interface MainWindowProps {
+  pokemonList: [],
+  nextApiLink: string,
+  searchName: string
+}
+
+class MainWindow extends React.Component<MainWindowProps, { theme: string, loading: boolean, loadNext: boolean }> {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       theme: 'light',
       loading: true,
-      searchName: "",
       loadNext: false,
     }
   }
@@ -59,8 +65,8 @@ class MainWindow extends React.Component {
     const listToShow = _.chain(this.props.pokemonList)
       .entries()
       .map((val, key) => {
-        let filtered = val[1]!=undefined && (this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase()));
-        return filtered == true ? <div className="child"><Pokemon key={key} apiLink={val[1].url} name={val[1].name} pokeDetails={val[1].details} /></div> : <></>
+        let isOnTheList = val[1] != undefined && (this.props.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.props.searchName.toLocaleLowerCase()));
+        return isOnTheList == true ? <div className="child"><Pokemon key={key} apiLink={val[1].url} name={val[1].name} pokemonDetails={val[1].details} /></div> : <></>
       }).value()
 
     return (
@@ -73,13 +79,13 @@ class MainWindow extends React.Component {
             {listToShow}
           </div>
           <div className="center-load-button">
-            <AwesomeButtonProgress action={(element,next) => {
+            <AwesomeButtonProgress action={(element, next) => {
               setTimeout(() => {
                 this.loadMorePokemons();
                 console.log(next())
                 next();
               }, 500)
-              }}>Load more pokemons</AwesomeButtonProgress>
+            }}>Load more pokemons</AwesomeButtonProgress>
           </div>
         </>
       </ThemeProvider>

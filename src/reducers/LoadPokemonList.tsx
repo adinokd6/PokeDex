@@ -2,7 +2,7 @@ import { Action, Reducer } from 'redux';
 import _ from 'lodash';
 
 export interface PokemonListState {
-    count: number,
+    count: number
     next: string
     results: Array<PokemonUrl>
 }

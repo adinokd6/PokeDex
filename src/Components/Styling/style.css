@@ -47,3 +47,12 @@
     margin-top: 80px !important;
     text-align: center !important;
 }
+
+.modal-position {
+    position: absolute;
+    z-index: 100000;
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    background: white;
+}

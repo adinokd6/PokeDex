@@ -12,7 +12,7 @@ import MainWindow from './Components/MainWindow';
 
 ReactDOM.render(
   <Provider store={storeExport}>
-    <MainWindow />
+    <MainWindow searchName={""}/>
   </Provider>,
   document.getElementById('root')
 );
