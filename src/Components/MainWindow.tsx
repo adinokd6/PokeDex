@@ -13,14 +13,14 @@ import Logo from "../Images/Pokedex_logo.png";
 
 interface MainWindowProps {
   pokemonList: [],
-  nextApiLink: string,
-  searchName: string
+  nextApiLink: string
 }
 
 interface MainWindowState {
   theme: string,
   loading: boolean,
   loadNext: string,
+  searchName: string
 }
 
 class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
@@ -30,6 +30,7 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
       theme: 'light',
       loading: true,
       loadNext: 'idle',
+      searchName: ""
     }
   }
 
@@ -73,11 +74,16 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
 
 
 
+  searchForPokemon(event: any) {
+    this.setState({searchName: event.target.value})
+  }
+
+
   render() {
     const listToShow = _.chain(this.props.pokemonList)
       .entries()
       .map((val, key) => {
-        let isOnTheList = val[1] != undefined && (this.props.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.props.searchName.toLocaleLowerCase()));
+        let isOnTheList = val[1] != undefined && (this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase()));
         return isOnTheList == true ? <div className="child"><Pokemon key={key} apiLink={val[1].url} name={val[1].name} pokemonDetails={val[1].details} /></div> : <></>
       }).value()
 
@@ -87,6 +93,7 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
           <GlobalStyles />
           <div><img src={Logo}></img></div>
           <ReactiveButton onClick={this.themeToggler}>Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</ReactiveButton>
+          <input type="text" value={this.state.searchName} onChange={(event) => this.searchForPokemon(event)} />
           <div className="parent">
             {listToShow}
           </div>

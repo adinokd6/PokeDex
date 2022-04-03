@@ -10,7 +10,7 @@ import MainWindow from './Components/MainWindow';
 
 ReactDOM.render(
   <Provider store={storeExport}>
-    <MainWindow searchName={""} />
+    <MainWindow />
   </Provider>,
   document.getElementById('root')
 );

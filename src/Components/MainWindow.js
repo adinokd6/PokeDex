@@ -49,6 +49,7 @@ class MainWindow extends React.Component {
             theme: 'light',
             loading: true,
             loadNext: 'idle',
+            searchName: ""
         };
     }
     componentDidMount() {
@@ -76,11 +77,14 @@ class MainWindow extends React.Component {
             this.setState({ loadNext: 'success' });
         }
     }
+    searchForPokemon(event) {
+        this.setState({ searchName: event.target.value });
+    }
     render() {
         const listToShow = lodash_1.default.chain(this.props.pokemonList)
             .entries()
             .map((val, key) => {
-            let isOnTheList = val[1] != undefined && (this.props.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.props.searchName.toLocaleLowerCase()));
+            let isOnTheList = val[1] != undefined && (this.state.searchName === "" || val[1].name.toLocaleLowerCase().includes(this.state.searchName.toLocaleLowerCase()));
             return isOnTheList == true ? React.createElement("div", { className: "child" },
                 React.createElement(Pokemon_1.default, { key: key, apiLink: val[1].url, name: val[1].name, pokemonDetails: val[1].details })) : React.createElement(React.Fragment, null);
         }).value();
@@ -92,6 +96,7 @@ class MainWindow extends React.Component {
                 React.createElement(reactive_button_1.default, { onClick: this.themeToggler },
                     "Change to ",
                     this.state.theme == "dark" ? "light theme" : "dark theme"),
+                React.createElement("input", { type: "text", value: this.state.searchName, onChange: (event) => this.searchForPokemon(event) }),
                 React.createElement("div", { className: "parent" }, listToShow),
                 React.createElement("div", { className: "center-load-button" },
                     React.createElement(reactive_button_1.default, { buttonState: this.state.loadNext, onClick: () => { this.loadMorePokemons(); }, idleText: 'Load more pokemons' })))));
