@@ -1,37 +1,61 @@
-import * as React from 'react';
-import { Modal } from 'react-responsive-modal';
-import { PokemonDetails } from '../reducers/LoadPokemonList.tsx';
-import './Styling/style.css';
-
-
-class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClose: any, isOpen: boolean }, { photo: string }> {
-    constructor(props: any) {
-        super(props)
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = __importStar(require("react"));
+const react_responsive_modal_1 = require("react-responsive-modal");
+require("./Styling/style.css");
+class PokeModal extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             photo: this.props.pokemonDetails.sprites.front_default
-        }
-        this.closeModal = this.props.onClose.bind(this)
+        };
+        this.closeModal = this.props.onClose.bind(this);
     }
-
-
     closeModal() { }
-
     render() {
-        console.log(this.props.isOpen)
-        const types = this.props.pokemonDetails.types.map((x) => { return <>Type: <span>{x.type.name}</span><hr /></> })
-        return (
-            <Modal classNames={{ root: "modal-position" }} open={this.props.isOpen} onClose={this.props.onClose} >
-                <h2>Simple centered modal</h2>
-                <div>Photo: {<img src={this.props.pokemonDetails.sprites.front_default} />}</div>
-                <hr />
-                <span>Base experience: {this.props.pokemonDetails.base_experience}</span>
-                <hr />
-                <span>Height: {this.props.pokemonDetails.height}</span>
-                <hr />
-                {types}
-            </Modal>
-        )
+        console.log(this.props.isOpen);
+        const types = this.props.pokemonDetails.types.map((x) => { return React.createElement(React.Fragment, null,
+            "Type: ",
+            React.createElement("span", null, x.type.name),
+            React.createElement("hr", null)); });
+        return (React.createElement(react_responsive_modal_1.Modal, { classNames: { root: "modal-position" }, open: this.props.isOpen, onClose: this.props.onClose },
+            React.createElement("h2", null, "Simple centered modal"),
+            React.createElement("div", null,
+                "Photo: ",
+                React.createElement("img", { src: this.props.pokemonDetails.sprites.front_default })),
+            React.createElement("hr", null),
+            React.createElement("span", null,
+                "Base experience: ",
+                this.props.pokemonDetails.base_experience),
+            React.createElement("hr", null),
+            React.createElement("span", null,
+                "Height: ",
+                this.props.pokemonDetails.height),
+            React.createElement("hr", null),
+            types));
     }
 }
-
-export default PokeModal;
+exports.default = PokeModal;

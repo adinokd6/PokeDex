@@ -1,78 +1,67 @@
-import React from "react";
-import { connect } from "react-redux";
-import { fetchWrapper } from '../fetchWrapper';
-import { storeExport } from '../store';
-import './Styling/pokemonSpinner.css';
-import { PokemonDetails, PokemonUrl, Sprites } from '../reducers/LoadPokemonList.tsx';
-import { AwesomeButton } from "react-awesome-button";
-import PokeModal from './PokeModal';
-
-class Pokemon extends React.Component<{ apiLink: string, name: string, pokemonDetails: PokemonDetails }, { loading: boolean, openModal: boolean }> {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const react_redux_1 = require("react-redux");
+const fetchWrapper_1 = require("../fetchWrapper");
+const store_1 = require("./store");
+require("./Styling/pokemonSpinner.css");
+const PokeModal_1 = __importDefault(require("./PokeModal"));
+const reactive_button_1 = __importDefault(require("reactive-button"));
+class Pokemon extends react_1.default.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             loading: true,
             openModal: false,
-        }
-        this.openModal = this.openModal.bind(this)
+        };
+        this.openModal = this.openModal.bind(this);
     }
-
     componentDidMount() {
-        this.loadDetails()
+        this.loadDetails();
     }
-
-
     loadDetails() {
         setTimeout(() => {
-            fetchWrapper.get(this.props.apiLink)
+            fetchWrapper_1.fetchWrapper.get(this.props.apiLink)
                 .then((result) => {
-                    this.setState({ loading: false })
-                    storeExport.dispatch({ type: 'LOAD_DETAILS', details: result, name: this.props.name })
-                })
+                this.setState({ loading: false });
+                store_1.storeExport.dispatch({ type: 'LOAD_DETAILS', details: result, name: this.props.name });
+            });
         }, 1000);
     }
-
     openModal() {
-        this.setState(prevState => ({ openModal: !prevState.openModal }))
+        this.setState(prevState => ({ openModal: !prevState.openModal }));
     }
-
     render() {
-
         if (this.state.loading || this.props.pokemonDetails == undefined) {
-            return <div className="center-spinner"><div className="pokemon"></div></div>
+            return react_1.default.createElement("div", { className: "center-spinner" },
+                react_1.default.createElement("div", { className: "pokemon" }));
         }
-
-        console.log(this.props.pokemonDetails)
-        return (
-            <div>
-                <div><AwesomeButton className="style-button-for-pokeImg" onPress={() => this.openModal()}>{<img src={this.props.pokemonDetails.sprites.front_default}></img>}</AwesomeButton></div>
-                <div>{this.props.name}</div>
-                {this.state.openModal && <PokeModal pokemonDetails={this.props.pokemonDetails} isOpen={this.state.openModal} onClose={this.openModal} />}
-            </div>
-        )
+        const getImage = this.props.pokemonDetails.sprites.front_default;
+        console.log(this.props.pokemonDetails);
+        return (react_1.default.createElement("div", null,
+            react_1.default.createElement("div", { className: "margin-for-pokemon" },
+                react_1.default.createElement(reactive_button_1.default, { onClick: () => this.openModal(), idleText: react_1.default.createElement(react_1.default.Fragment, null,
+                        react_1.default.createElement("img", { src: getImage }),
+                        react_1.default.createElement("div", null, this.props.name)), className: 'style-button-for-pokeImg' })),
+            this.state.openModal && react_1.default.createElement(PokeModal_1.default, { pokemonDetails: this.props.pokemonDetails, isOpen: this.state.openModal, onClose: this.openModal })));
     }
 }
-
-
 const maptStateToProps = (state, getProps) => {
     return {
         pokemonDetails: findDetails(state.results, getProps.name)
-    }
-}
-
-
+    };
+};
 const mapDispatchToProps = (dispatch) => {
     return {
-        details: (newData, newName) => { dispatch({ type: 'LOAD_DETAILS', details: newData, name: newName }) }
-    }
+        details: (newData, newName) => { dispatch({ type: 'LOAD_DETAILS', details: newData, name: newName }); }
+    };
+};
+function findDetails(data, name) {
+    var pokemonIndex = data.findIndex(x => x.name === name);
+    return data[pokemonIndex].specs;
 }
-
-
-function findDetails(data: Array<PokemonUrl>, name) {
-    var pokemonIndex = data.findIndex(x => x.name === name)
-    return data[pokemonIndex].specs
-}
-
-const connector = connect(maptStateToProps, mapDispatchToProps)
-
-export default connector(Pokemon);
+const connector = (0, react_redux_1.connect)(maptStateToProps, mapDispatchToProps);
+exports.default = connector(Pokemon);

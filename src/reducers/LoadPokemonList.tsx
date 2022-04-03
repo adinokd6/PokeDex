@@ -17,7 +17,7 @@ export interface PokemonDetails {
     base_experience: number
     height: number
     types: Array<Types>
-    sprites: Array<Sprites>
+    sprites: Sprites
 }
 
 export interface Types {
@@ -30,14 +30,14 @@ export interface Type {
 }
 
 export interface Sprites {
-    back_default: URL
-    back_female: URL
-    back_shiny: URL
-    back_shiny_female: URL
-    front_default: URL
-    front_female: URL
-    front_shiny: URL
-    front_shiny_female: URL
+    back_default: string
+    back_female: string
+    back_shiny: string
+    back_shiny_female: string
+    front_default: string
+    front_female: string
+    front_shiny: string
+    front_shiny_female: string
 }
 
 export interface PokemonListAction {
@@ -54,6 +54,7 @@ export interface PokemonDetailsAction {
 export interface LoadMorePokemonsAction {
     type: 'LOAD_MORE'
     newPokemons: Array<PokemonUrl>
+    newLink: string
 }
 
 export type KnownAction = PokemonListAction | PokemonDetailsAction | LoadMorePokemonsAction
@@ -81,7 +82,8 @@ export const loadPokemonListReducer: Reducer<PokemonListState> = (state: Pokemon
         case 'LOAD_MORE':
             return {
                 ...state,
-                results: state.results.concat(action.newPokemons)
+                results: state.results.concat(action.newPokemons),
+                next: action.newLink
             }
         default:
             {
@@ -91,7 +93,7 @@ export const loadPokemonListReducer: Reducer<PokemonListState> = (state: Pokemon
     }
 }
 
-function addDetails(data: Array<PokemonUrl>, details, name) {
+function addDetails(data: Array<PokemonUrl>, details: PokemonDetails, name: string) {
     var pokemonIndex = data.findIndex(x => x.name == name)
     data[pokemonIndex].specs=details;
     return data
