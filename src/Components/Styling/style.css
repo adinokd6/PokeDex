@@ -36,6 +36,7 @@
     display: flex;
     flex-wrap: wrap;
     text-align: center;
+    margin-top: 5%;
 }
 
 .child {
@@ -55,4 +56,11 @@
     right: 25%;
     top: 25%;
     background: white;
+}
+
+.center-spinner {
+    height: 130px;
+    width: 95px;
+    padding-left: 25%;
+    padding-right: 25%;
 }

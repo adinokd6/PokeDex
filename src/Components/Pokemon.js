@@ -29,7 +29,7 @@ class Pokemon extends React.Component<{ apiLink: string, name: string, pokemonDe
                     this.setState({ loading: false })
                     storeExport.dispatch({ type: 'LOAD_DETAILS', details: result, name: this.props.name })
                 })
-        }, 2000);
+        }, 1000);
     }
 
     openModal() {
@@ -39,7 +39,7 @@ class Pokemon extends React.Component<{ apiLink: string, name: string, pokemonDe
     render() {
 
         if (this.state.loading || this.props.pokemonDetails == undefined) {
-            return <div className="pokemon"></div>
+            return <div className="center-spinner"><div className="pokemon"></div></div>
         }
 
         console.log(this.props.pokemonDetails)
