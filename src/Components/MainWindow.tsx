@@ -91,9 +91,9 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
       <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
         <>
           <GlobalStyles />
+          <ReactiveButton onClick={this.themeToggler} idleText={this.state.theme == "dark" ? "Change to dark theme" : "Change to light theme"}></ReactiveButton>
           <div className="center-logo"><img src={Logo}></img></div>
-          <ReactiveButton onClick={this.themeToggler}>Change to {this.state.theme == "dark" ? "light theme" : "dark theme"}</ReactiveButton>
-          <input type="text" value={this.state.searchName} onChange={(event) => this.searchForPokemon(event)} />
+          <div><input type="text" value={this.state.searchName} onChange={(event) => this.searchForPokemon(event)} /></div>
           <div className="parent">
             {listToShow}
           </div>
