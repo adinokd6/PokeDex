@@ -26,12 +26,12 @@ class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClos
                 color: "red"
             }
             }
-                idleText={<><span className="font-modal">X</span></>}
+                idleText={<></>}
                 className={"button-close-modal"} onClick={this.closeModal} />
         </>)
         const types = this.props.pokemonDetails.types.map((x) => { return <><span className="bold-font">Type: </span><span>{x.type.name}</span><br /></> })
         return (
-            <Modal center classNames={{ root: "modal-position modal-background" }} open={this.props.isOpen} onClose={() => null} closeIcon={closeButton} showCloseIcon={false} >
+            <Modal center classNames={{ root: "modal-position modal-background animation-modal-in" }} open={this.props.isOpen} onClose={() => null} closeIcon={closeButton} showCloseIcon={false} >
                 <div>
                     {closeButton}
                     <div id="left">{<img src={this.props.pokemonDetails.sprites.front_default} />}</div>

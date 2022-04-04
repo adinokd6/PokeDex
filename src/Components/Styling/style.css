@@ -68,8 +68,9 @@
 .center-spinner {
     height: 130px;
     width: 95px;
-    padding-left: 25%;
+    padding-left: 30%;
     padding-right: 25%;
+    padding-top: 30%;
 }
 
 .margin-for-pokemon {
@@ -144,6 +145,8 @@ input {
     margin-right: 20px !important;
     margin-left: 63px;
     margin-bottom: 3px;
+    border: black !important;
+    border-style: solid !important;
 }
 
 .conteren-modal-close-button {
@@ -157,6 +160,16 @@ input {
     font-size: 15px;
     font-weight: bold;
     margin-left: -4px;
+}
+
+.animation-modal-in {
+    animation-name: customEnterModalAnimation;
+    animation-duration: 4s;
+}
+
+.animation-modal-out {
+    animation-name: customLeaveModalAnimation;
+    animation-duration: 4s;
 }
 
 @font-face {
