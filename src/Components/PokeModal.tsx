@@ -3,9 +3,10 @@ import { Modal } from 'react-responsive-modal';
 import { PokemonDetails } from '../reducers/LoadPokemonList';
 import ReactiveButton from 'reactive-button';
 import './Styling/style.css';
+import Sign from "../Images/on.png"
 
 
-class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClose: any, isOpen: boolean }, { photo: string }> {
+class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClose: any, isOpen: boolean, pokemonName: string }, { photo: string }> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -20,17 +21,28 @@ class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClos
     render() {
         console.log(this.props.isOpen)
         const closeButton = (<>
-        <ReactiveButton onClick={this.closeModal} />
+            <ReactiveButton style={{
+                border: "red",
+                color: "red"
+            }
+            }
+                idleText={<><span className="font-modal">X</span></>}
+                className={"button-close-modal"} onClick={this.closeModal} />
         </>)
-        const types = this.props.pokemonDetails.types.map((x) => { return <>Type: <span>{x.type.name}</span><br /></> })
+        const types = this.props.pokemonDetails.types.map((x) => { return <><span className="bold-font">Type: </span><span>{x.type.name}</span><br /></> })
         return (
-            <Modal classNames={{ root: "modal-position modal-background" }} open={this.props.isOpen} onClose={() => null} closeIcon={closeButton} >
+            <Modal center classNames={{ root: "modal-position modal-background" }} open={this.props.isOpen} onClose={() => null} closeIcon={closeButton} showCloseIcon={false} >
                 <div>
-                    <div id="right">{<img src={this.props.pokemonDetails.sprites.front_default} />}</div>
-                    <div id="left">
-                        <span>Base experience: {this.props.pokemonDetails.base_experience}</span>
+                    {closeButton}
+                    <div id="left">{<img src={this.props.pokemonDetails.sprites.front_default} />}</div>
+                    <div id="right">
+                        <span className="name-font-size-modal">{this.props.pokemonName}</span>
                         <br />
-                        <span>Height: {this.props.pokemonDetails.height}</span>
+                        <br />
+                        <br />
+                        <span className="bold-font">Base experience: </span><span>{this.props.pokemonDetails.base_experience}</span>
+                        <br />
+                        <span className="bold-font">Height: </span><span>{this.props.pokemonDetails.height}</span>
                         <br />
                         {types}
                     </div>

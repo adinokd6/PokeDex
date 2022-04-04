@@ -38,6 +38,8 @@ const lodash_1 = __importDefault(require("lodash"));
 const Pokemon_1 = __importDefault(require("./Pokemon"));
 const reactive_button_1 = __importDefault(require("reactive-button"));
 const Pokedex_logo_png_1 = __importDefault(require("../Images/Pokedex_logo.png"));
+const bulb_on_png_1 = __importDefault(require("../Images/bulb_on.png"));
+const bulb_off_png_1 = __importDefault(require("../Images/bulb_off.png"));
 class MainWindow extends React.Component {
     constructor(props) {
         super(props);
@@ -91,14 +93,16 @@ class MainWindow extends React.Component {
         return (React.createElement(styled_components_1.ThemeProvider, { theme: this.state.theme === 'light' ? Themes_1.lightTheme : Themes_1.darkTheme },
             React.createElement(React.Fragment, null,
                 React.createElement(globalStyles_1.GlobalStyles, null),
-                React.createElement(reactive_button_1.default, { onClick: this.themeToggler, idleText: this.state.theme == "dark" ? "Change to dark theme" : "Change to light theme" }),
+                React.createElement(reactive_button_1.default, { onClick: this.themeToggler, className: "button-for-bulb", idleText: this.state.theme == "dark" ? React.createElement(React.Fragment, null,
+                        React.createElement("img", { src: bulb_off_png_1.default })) : React.createElement(React.Fragment, null,
+                        React.createElement("img", { src: bulb_on_png_1.default })) }),
                 React.createElement("div", { className: "center-logo" },
                     React.createElement("img", { src: Pokedex_logo_png_1.default })),
-                React.createElement("div", null,
+                React.createElement("div", { className: "align-input" },
                     React.createElement("input", { type: "text", value: this.state.searchName, onChange: (event) => this.searchForPokemon(event) })),
                 React.createElement("div", { className: "parent" }, listToShow),
                 React.createElement("div", { className: "center-load-button" },
-                    React.createElement(reactive_button_1.default, { buttonState: this.state.loadNext, onClick: () => { this.loadMorePokemons(); }, idleText: 'Load more pokemons' })))));
+                    React.createElement(reactive_button_1.default, { className: "load-button", buttonState: this.state.loadNext, onClick: () => { this.loadMorePokemons(); }, idleText: 'Load more pokemons' })))));
     }
 }
 const maptStateToProps = (state) => {

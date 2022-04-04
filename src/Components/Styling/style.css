@@ -38,7 +38,7 @@
     display: flex;
     flex-wrap: wrap;
     text-align: center;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
 .child {
@@ -47,8 +47,9 @@
 }
 
 .center-load-button {
-    margin-top: 80px !important;
+    margin-top: 10px !important;
     text-align: center !important;
+    padding-bottom: 20px;
 }
 
 .modal-position {
@@ -76,15 +77,17 @@
 }
 
 #right {
-    scale: 2;
-    padding-top: 25%;
-    padding-left: 31%;
+    font-family: bitFont;
+    display: inline-block;
+    padding-left: 30%;
 }
 
 #left {
-    font-family: bitFont;
-    padding-left: 60%;
-    font-size: 20px;
+    scale: 2;
+    display: inline-block;
+    padding-top: 25%;
+    padding-left: 3%;
+
 }
 
 .pokemonFont {
@@ -94,13 +97,66 @@
 }
 
 input {
-    background: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.4);
     padding: 10px;
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     color: #333;
-    -webkit-box-shadow: 0 2px 10px 1px rgba(0,0,0,0.5);
-    box-shadow: 0 2px 10px 1px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+.bulb-style {
+    width: 50px;
+    height: 50px;
+}
+
+.button-for-bulb {
+    -webkit-box-shadow: unset !important;
+    -moz-box-shadow: unset !important;
+    box-shadow: unset !important;
+    --reactive-button-primary-color: none !important;
+}
+
+.load-button {
+    --reactive-button-primary-color: #0A285F !important;
+    border-radius: 20px !important;
+}
+
+.align-input {
+    text-align: center;
+}
+
+.name-font-size-modal {
+    font-size: 30px;
+}
+
+.bold-font {
+    font-weight: bold;
+}
+
+.button-close-modal {
+    height: 30px !important;
+    width: 30px !important;
+    border-radius: 15px !important;
+    background-color: red !important;
+    margin-top: 450px !important;
+    margin-right: 20px !important;
+    margin-left: 63px;
+    margin-bottom: 3px;
+}
+
+.conteren-modal-close-button {
+    background: none;
+    border: none;
+
+}
+
+.font-modal {
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: -4px;
 }
 
 @font-face {

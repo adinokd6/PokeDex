@@ -57,7 +57,7 @@ class Pokemon extends React.Component<PokemonProps, { loading: boolean, openModa
             <div>
                 <div className="margin-for-pokemon"><ReactiveButton onClick={() => this.openModal()} idleText={<><img src={getImage}></img><div className="pokemonFont">{this.capitalize(this.props.name)}</div></>} className={'style-button-for-pokeImg'}></ReactiveButton></div>
                 
-                {this.state.openModal && <PokeModal pokemonDetails={this.props.pokemonDetails} isOpen={this.state.openModal} onClose={this.openModal} />}
+                {this.state.openModal && <PokeModal pokemonDetails={this.props.pokemonDetails} pokemonName={this.capitalize(this.props.name)} isOpen={this.state.openModal} onClose={this.openModal} />}
             </div>
         )
     }

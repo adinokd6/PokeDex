@@ -10,6 +10,8 @@ import _ from 'lodash';
 import Pokemon from './Pokemon';
 import ReactiveButton from 'reactive-button';
 import Logo from "../Images/Pokedex_logo.png";
+import BulbOn from "../Images/bulb_on.png"
+import BulbOff from "../Images/bulb_off.png"
 
 interface MainWindowProps {
   pokemonList: [],
@@ -91,14 +93,14 @@ class MainWindow extends React.Component<MainWindowProps, MainWindowState> {
       <ThemeProvider theme={this.state.theme === 'light' ? lightTheme : darkTheme}>
         <>
           <GlobalStyles />
-          <ReactiveButton onClick={this.themeToggler} idleText={this.state.theme == "dark" ? "Change to dark theme" : "Change to light theme"}></ReactiveButton>
+          <ReactiveButton onClick={this.themeToggler} className={"button-for-bulb"} idleText={this.state.theme == "dark" ? <><img src={BulbOff}></img></> : <><img src={BulbOn}></img></>}></ReactiveButton>
           <div className="center-logo"><img src={Logo}></img></div>
-          <div><input type="text" value={this.state.searchName} onChange={(event) => this.searchForPokemon(event)} /></div>
+          <div className="align-input"><input placeholder="Search for pokemon" type="text" value={this.state.searchName} onChange={(event) => this.searchForPokemon(event)} /></div>
           <div className="parent">
             {listToShow}
           </div>
           <div className="center-load-button">
-            <ReactiveButton buttonState={this.state.loadNext} onClick={() => { this.loadMorePokemons() }} idleText={'Load more pokemons'}></ReactiveButton>
+            <ReactiveButton className="load-button" buttonState={this.state.loadNext} onClick={() => { this.loadMorePokemons() }} idleText={'Load more pokemons'}></ReactiveButton>
           </div>
         </>
       </ThemeProvider>

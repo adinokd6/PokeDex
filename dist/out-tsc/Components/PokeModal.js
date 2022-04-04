@@ -41,23 +41,32 @@ class PokeModal extends React.Component {
     closeModal() { }
     render() {
         console.log(this.props.isOpen);
+        const image = (React.createElement(React.Fragment, null,
+            React.createElement("svg", { height: "15", width: "15" },
+                React.createElement("circle", { cx: "50", cy: "50", r: "40", stroke: "black", "stroke-width": "3", fill: "red" }))));
         const closeButton = (React.createElement(React.Fragment, null,
-            React.createElement(reactive_button_1.default, { onClick: this.closeModal })));
+            React.createElement(reactive_button_1.default, { style: {
+                    border: "red",
+                    color: "red"
+                }, idleText: React.createElement(React.Fragment, null, image), className: "button-close-modal", onClick: this.closeModal })));
         const types = this.props.pokemonDetails.types.map((x) => { return React.createElement(React.Fragment, null,
-            "Type: ",
+            React.createElement("span", { className: "bold-font" }, "Type: "),
             React.createElement("span", null, x.type.name),
             React.createElement("br", null)); });
-        return (React.createElement(react_responsive_modal_1.Modal, { classNames: { root: "modal-position modal-background" }, open: this.props.isOpen, onClose: () => null, closeIcon: closeButton },
+        return (React.createElement(react_responsive_modal_1.Modal, { center: true, classNames: { root: "modal-position modal-background" }, open: this.props.isOpen, onClose: () => null, closeIcon: closeButton, showCloseIcon: false },
             React.createElement("div", null,
-                React.createElement("div", { id: "right" }, React.createElement("img", { src: this.props.pokemonDetails.sprites.front_default })),
-                React.createElement("div", { id: "left" },
-                    React.createElement("span", null,
-                        "Base experience: ",
-                        this.props.pokemonDetails.base_experience),
+                React.createElement("div", { id: "left" }, React.createElement("img", { src: this.props.pokemonDetails.sprites.front_default })),
+                closeButton,
+                React.createElement("div", { id: "right" },
+                    React.createElement("span", { className: "name-font-size-modal" }, this.props.pokemonName),
                     React.createElement("br", null),
-                    React.createElement("span", null,
-                        "Height: ",
-                        this.props.pokemonDetails.height),
+                    React.createElement("br", null),
+                    React.createElement("br", null),
+                    React.createElement("span", { className: "bold-font" }, "Base experience: "),
+                    React.createElement("span", null, this.props.pokemonDetails.base_experience),
+                    React.createElement("br", null),
+                    React.createElement("span", { className: "bold-font" }, "Height: "),
+                    React.createElement("span", null, this.props.pokemonDetails.height),
                     React.createElement("br", null),
                     types))));
     }

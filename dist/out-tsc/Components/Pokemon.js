@@ -47,8 +47,8 @@ class Pokemon extends react_1.default.Component {
             react_1.default.createElement("div", { className: "margin-for-pokemon" },
                 react_1.default.createElement(reactive_button_1.default, { onClick: () => this.openModal(), idleText: react_1.default.createElement(react_1.default.Fragment, null,
                         react_1.default.createElement("img", { src: getImage }),
-                        react_1.default.createElement("div", null, this.capitalize(this.props.name))), className: 'style-button-for-pokeImg' })),
-            this.state.openModal && react_1.default.createElement(PokeModal_1.default, { pokemonDetails: this.props.pokemonDetails, isOpen: this.state.openModal, onClose: this.openModal })));
+                        react_1.default.createElement("div", { className: "pokemonFont" }, this.capitalize(this.props.name))), className: 'style-button-for-pokeImg' })),
+            this.state.openModal && react_1.default.createElement(PokeModal_1.default, { pokemonDetails: this.props.pokemonDetails, pokemonName: this.capitalize(this.props.name), isOpen: this.state.openModal, onClose: this.openModal })));
     }
 }
 const maptStateToProps = (state, getProps) => {
