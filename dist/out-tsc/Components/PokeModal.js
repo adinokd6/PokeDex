@@ -40,22 +40,20 @@ class PokeModal extends React.Component {
         const types = this.props.pokemonDetails.types.map((x) => { return React.createElement(React.Fragment, null,
             "Type: ",
             React.createElement("span", null, x.type.name),
-            React.createElement("hr", null)); });
-        return (React.createElement(react_responsive_modal_1.Modal, { classNames: { root: "modal-position" }, open: this.props.isOpen, onClose: this.props.onClose },
-            React.createElement("h2", null, "Simple centered modal"),
+            React.createElement("br", null)); });
+        return (React.createElement(react_responsive_modal_1.Modal, { classNames: { root: "modal-position modal-background" }, open: this.props.isOpen, onClose: this.props.onClose },
             React.createElement("div", null,
-                "Photo: ",
-                React.createElement("img", { src: this.props.pokemonDetails.sprites.front_default })),
-            React.createElement("hr", null),
-            React.createElement("span", null,
-                "Base experience: ",
-                this.props.pokemonDetails.base_experience),
-            React.createElement("hr", null),
-            React.createElement("span", null,
-                "Height: ",
-                this.props.pokemonDetails.height),
-            React.createElement("hr", null),
-            types));
+                React.createElement("div", { id: "right" }, React.createElement("img", { src: this.props.pokemonDetails.sprites.front_default })),
+                React.createElement("div", { id: "left" },
+                    React.createElement("span", null,
+                        "Base experience: ",
+                        this.props.pokemonDetails.base_experience),
+                    React.createElement("br", null),
+                    React.createElement("span", null,
+                        "Height: ",
+                        this.props.pokemonDetails.height),
+                    React.createElement("br", null),
+                    types))));
     }
 }
 exports.default = PokeModal;

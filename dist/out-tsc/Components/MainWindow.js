@@ -91,7 +91,7 @@ class MainWindow extends React.Component {
         return (React.createElement(styled_components_1.ThemeProvider, { theme: this.state.theme === 'light' ? Themes_1.lightTheme : Themes_1.darkTheme },
             React.createElement(React.Fragment, null,
                 React.createElement(globalStyles_1.GlobalStyles, null),
-                React.createElement("div", null,
+                React.createElement("div", { className: "center-logo" },
                     React.createElement("img", { src: Pokedex_logo_png_1.default })),
                 React.createElement(reactive_button_1.default, { onClick: this.themeToggler },
                     "Change to ",

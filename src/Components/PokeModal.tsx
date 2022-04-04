@@ -18,17 +18,19 @@ class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClos
 
     render() {
         console.log(this.props.isOpen)
-        const types = this.props.pokemonDetails.types.map((x) => { return <>Type: <span>{x.type.name}</span><hr /></> })
+        const types = this.props.pokemonDetails.types.map((x) => { return <>Type: <span>{x.type.name}</span><br /></> })
         return (
-            <Modal classNames={{ root: "modal-position" }} open={this.props.isOpen} onClose={this.props.onClose} >
-                <h2>Simple centered modal</h2>
-                <div>Photo: {<img src={this.props.pokemonDetails.sprites.front_default} />}</div>
-                <hr />
-                <span>Base experience: {this.props.pokemonDetails.base_experience}</span>
-                <hr />
-                <span>Height: {this.props.pokemonDetails.height}</span>
-                <hr />
-                {types}
+            <Modal classNames={{ root: "modal-position modal-background" }} open={this.props.isOpen} onClose={this.props.onClose} >
+                <div>
+                    <div id="right">{<img src={this.props.pokemonDetails.sprites.front_default} />}</div>
+                    <div id="left">
+                        <span>Base experience: {this.props.pokemonDetails.base_experience}</span>
+                        <br />
+                        <span>Height: {this.props.pokemonDetails.height}</span>
+                        <br />
+                        {types}
+                    </div>
+                </div>
             </Modal>
         )
     }
