@@ -3,7 +3,6 @@ import { Modal } from 'react-responsive-modal';
 import { PokemonDetails } from '../reducers/LoadPokemonList';
 import ReactiveButton from 'reactive-button';
 import './Styling/style.css';
-import Sign from "../Images/on.png"
 
 
 class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClose: any, isOpen: boolean, pokemonName: string }, { photo: string }> {
@@ -19,7 +18,6 @@ class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClos
     closeModal() { }
 
     render() {
-        console.log(this.props.isOpen)
         const closeButton = (<>
             <ReactiveButton style={{
                 border: "red",
