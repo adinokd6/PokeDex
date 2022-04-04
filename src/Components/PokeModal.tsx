@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Modal } from 'react-responsive-modal';
 import { PokemonDetails } from '../reducers/LoadPokemonList';
+import ReactiveButton from 'reactive-button';
 import './Styling/style.css';
 
 
@@ -18,9 +19,12 @@ class PokeModal extends React.Component<{ pokemonDetails: PokemonDetails, onClos
 
     render() {
         console.log(this.props.isOpen)
+        const closeButton = (<>
+        <ReactiveButton onClick={this.closeModal} />
+        </>)
         const types = this.props.pokemonDetails.types.map((x) => { return <>Type: <span>{x.type.name}</span><br /></> })
         return (
-            <Modal classNames={{ root: "modal-position modal-background" }} open={this.props.isOpen} onClose={this.props.onClose} >
+            <Modal classNames={{ root: "modal-position modal-background" }} open={this.props.isOpen} onClose={() => null} closeIcon={closeButton} >
                 <div>
                     <div id="right">{<img src={this.props.pokemonDetails.sprites.front_default} />}</div>
                     <div id="left">

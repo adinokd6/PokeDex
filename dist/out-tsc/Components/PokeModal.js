@@ -22,9 +22,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __importStar(require("react"));
 const react_responsive_modal_1 = require("react-responsive-modal");
+const reactive_button_1 = __importDefault(require("reactive-button"));
 require("./Styling/style.css");
 class PokeModal extends React.Component {
     constructor(props) {
@@ -37,11 +41,13 @@ class PokeModal extends React.Component {
     closeModal() { }
     render() {
         console.log(this.props.isOpen);
+        const closeButton = (React.createElement(React.Fragment, null,
+            React.createElement(reactive_button_1.default, { onClick: this.closeModal })));
         const types = this.props.pokemonDetails.types.map((x) => { return React.createElement(React.Fragment, null,
             "Type: ",
             React.createElement("span", null, x.type.name),
             React.createElement("br", null)); });
-        return (React.createElement(react_responsive_modal_1.Modal, { classNames: { root: "modal-position modal-background" }, open: this.props.isOpen, onClose: this.props.onClose },
+        return (React.createElement(react_responsive_modal_1.Modal, { classNames: { root: "modal-position modal-background" }, open: this.props.isOpen, onClose: () => null, closeIcon: closeButton },
             React.createElement("div", null,
                 React.createElement("div", { id: "right" }, React.createElement("img", { src: this.props.pokemonDetails.sprites.front_default })),
                 React.createElement("div", { id: "left" },

@@ -5,7 +5,7 @@ import { GlobalStyles } from "./globalStyles";
 import { lightTheme, darkTheme } from "./Themes";
 import { fetchWrapper } from '../fetchWrapper';
 import { storeExport } from './store';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 import Pokemon from './Pokemon';
 import ReactiveButton from 'reactive-button';

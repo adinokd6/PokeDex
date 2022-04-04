@@ -42,6 +42,10 @@ class Pokemon extends React.Component<PokemonProps, { loading: boolean, openModa
         this.setState(prevState => ({ openModal: !prevState.openModal }))
     }
 
+    capitalize(str: string){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
     render() {
 
         if (this.state.loading || this.props.pokemonDetails == undefined) {
@@ -51,7 +55,7 @@ class Pokemon extends React.Component<PokemonProps, { loading: boolean, openModa
         const getImage = this.props.pokemonDetails.sprites.front_default
         return (
             <div>
-                <div className="margin-for-pokemon"><ReactiveButton onClick={() => this.openModal()} idleText={<><img src={getImage}></img><div>{this.props.name}</div></>} className={'style-button-for-pokeImg'}></ReactiveButton></div>
+                <div className="margin-for-pokemon"><ReactiveButton onClick={() => this.openModal()} idleText={<><img src={getImage}></img><div className="pokemonFont">{this.capitalize(this.props.name)}</div></>} className={'style-button-for-pokeImg'}></ReactiveButton></div>
                 
                 {this.state.openModal && <PokeModal pokemonDetails={this.props.pokemonDetails} isOpen={this.state.openModal} onClose={this.openModal} />}
             </div>
